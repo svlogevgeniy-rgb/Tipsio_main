@@ -1,0 +1,350 @@
+{
+  "landing": {
+    "betaBadge": "Bali beta · 0% platform fee for early venues",
+    "hero": {
+      "title": "Digital tips that actually work for Bali venues",
+      "subtitle": "Guests scan a QR and leave tips in seconds. Staff see every rupiah. You stay in control — and during our Bali beta, Tipsio is free for venues (planned 5% platform fee later).",
+      "primaryCta": "Connect my venue",
+      "secondaryCta": "See how it works",
+      "miniTrust": "Built on Midtrans. Guests can pay with GoPay, OVO, cards and Google Pay — no extra terminals, no new apps for guests."
+    },
+    "forWhom": {
+      "title": "One platform — three happy sides",
+      "owners": {
+        "title": "For venue owners",
+        "point1": "Increase staff motivation without touching menu prices.",
+        "point2": "Connect via Midtrans — no custom hardware or new terminals.",
+        "point3": "See all tips and payouts in one simple dashboard."
+      },
+      "staff": {
+        "title": "For staff",
+        "point1": "Tips go into a transparent system, not a mysterious jar.",
+        "point2": "See what you earned and when payouts happen."
+      },
+      "guests": {
+        "title": "For guests",
+        "point1": "No cash, no awkwardness at the table.",
+        "point2": "Scan, choose amount, pay in seconds — no app required."
+      }
+    },
+    "howItWorks": {
+      "title": "How Tipsio works in 3 steps",
+      "step1": {
+        "title": "1. Your venue connects Midtrans once",
+        "description": "You enter your Midtrans Merchant ID and API keys. We don't hold your money — tips go directly to your existing payment account."
+      },
+      "step2": {
+        "title": "2. We generate QR codes for staff and tables",
+        "description": "Print them, place on tables or staff badges. Guests scan with any phone camera."
+      },
+      "step3": {
+        "title": "3. Guests leave tips, you settle payouts",
+        "description": "Guests pay with GoPay, OVO, cards or QRIS via Midtrans. Tipsio calculates how much each staff member should get. You pay out in cash or bank transfer and mark payouts as done."
+      },
+      "flowText": "Guest → Midtrans → Your account → Staff payouts, calculated in Tipsio"
+    },
+    "whyBali": {
+      "title": "Built for Bali, not for \"global\" headlines",
+      "point1": "Works with QRIS, GoPay, OVO and cards via Midtrans — no extra terminals or hardware.",
+      "point2": "Designed for mixed teams: local staff, expat owners, tourists from all over the world.",
+      "point3": "Mobile‑first UI that behaves well even on spotty Wi‑Fi.",
+      "point4": "Simple onboarding: connect Midtrans, add staff, print QRs — ready in under an hour."
+    },
+    "productPeek": {
+      "title": "See Tipsio in action",
+      "guestScreen": "Guest tip screen — scan a QR, tap an amount, pay.",
+      "dashboard": "Venue dashboard — all tips and top staff at a glance.",
+      "payouts": "Payouts report — know exactly who should get how much."
+    },
+    "whereWeAre": {
+      "title": "Where we are now",
+      "description": "Tipsio is live with early venues in Bali. We're focused on making digital tips easy for guests, transparent for staff, and low‑friction for owners.",
+      "point1": "We integrate with Midtrans and follow their best practices.",
+      "point2": "We keep staff dashboards and payouts logic simple and clear.",
+      "point3": "We work closely with early partners to refine the product."
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "q1": {
+        "question": "Do you touch our money or hold funds?",
+        "answer": "No. All payments go directly to your Midtrans merchant account. Tipsio only helps you track and allocate tips to staff."
+      },
+      "q2": {
+        "question": "Do guests need to install an app?",
+        "answer": "No. Guests just scan a QR code with their phone camera and pay via Midtrans — GoPay, OVO, cards or QRIS."
+      },
+      "q3": {
+        "question": "How do staff get paid?",
+        "answer": "You still pay your staff in cash or via bank transfer. Tipsio calculates how much each staff member should get and shows it in a simple payouts report."
+      },
+      "q4": {
+        "question": "How much does Tipsio cost?",
+        "answer": "We keep our pricing simple for early partners. Midtrans fees apply as usual. Platform fee is discussed individually based on your volume."
+      },
+      "q5": {
+        "question": "How long does setup take?",
+        "answer": "Most venues connect Midtrans, add staff and print QR codes in under 1 hour."
+      }
+    },
+    "finalCta": {
+      "title": "Ready to try digital tips at your venue?",
+      "subtitle": "Connect Tipsio, start with a few tables or one shift, and see how your staff responds.",
+      "primaryCta": "Connect my venue",
+      "secondaryCta": "Talk to us on WhatsApp"
+    },
+    "footer": {
+      "staffLogin": "Staff login",
+      "venueLogin": "Venue login"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try again",
+    "back": "Back",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "search": "Search",
+    "filter": "Filter",
+    "all": "All",
+    "none": "None",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "currency": {
+    "idr": "IDR",
+    "prefix": "Rp"
+  },
+  "guest": {
+    "tip": {
+      "title": "Say thanks to {name}! 👋",
+      "titleTeam": "Support the team at {venue} ❤️",
+      "subtitle": "Loved the service? Send a cashless tip in seconds.",
+      "subtitleTeam": "Your digital tip helps us reward the staff who took care of you today.",
+      "disclaimer": "Tips go directly to the venue and are allocated to staff according to the venue's rules.",
+      "selectAmount": "Select amount (IDR)",
+      "otherAmount": "Other amount",
+      "amountHint": "Most guests leave between 10,000 and 50,000 IDR for good service.",
+      "whoServed": "Who served you today?",
+      "wholeTeam": "Whole Team (Pool)",
+      "wholeTeamDesc": "Share your tip equally among today's shift.",
+      "specificStaff": "Specific Staff",
+      "specificStaffDesc": "Choose a person from the list.",
+      "selectStaff": "Select staff member...",
+      "coverFee": "Cover the platform fee",
+      "coverFeeDesc": "Add {amount} so {name} receives the full tip",
+      "sendTip": "Send Tip Securely",
+      "securePayment": "Secure payment via GoPay, OVO, cards or QRIS — processed by our payment provider. No app required.",
+      "poweredBy": "Powered by Tipsio"
+    },
+    "success": {
+      "title": "Thank you! 🙌",
+      "subtitle": "Your tip has been sent successfully.",
+      "amount": "Amount",
+      "to": "To",
+      "theTeam": "The Team",
+      "message": "Your support helps us reward our staff and keep service standards high. We really appreciate it.",
+      "leaveReview": "Leave a review on Google Maps",
+      "close": "Close"
+    },
+    "error": {
+      "title": "Payment didn't go through",
+      "message": "Something went wrong and your tip was not completed. This can happen due to network or bank issues.",
+      "tryAgain": "Try again",
+      "backToAmount": "Back to amount selection"
+    }
+  },
+  "staff": {
+    "login": {
+      "title": "Welcome to your tips",
+      "subtitle": "Track your earnings and payout history in one place.",
+      "phoneOrEmail": "Phone number or email",
+      "placeholder": "Enter the contact you gave your manager.",
+      "getCode": "Get login code",
+      "codeHint": "We'll send you a one-time 6-digit code. No password needed.",
+      "enterCode": "Enter the 6-digit code we sent to {contact}",
+      "login": "Login",
+      "resend": "Didn't get a code? Resend."
+    },
+    "dashboard": {
+      "greeting": "Hi, {name}! 🤙",
+      "subtitle": "Here's how your tips are doing.",
+      "currentPeriod": "Current period (not yet paid)",
+      "tipsSince": "{count} tips since {date}",
+      "todayPerformance": "Today's performance",
+      "tipsReceived": "tips received",
+      "total": "total",
+      "lastPayouts": "Last payouts",
+      "paid": "Paid",
+      "seeFullHistory": "See full history"
+    },
+    "history": {
+      "title": "Tip history",
+      "subtitle": "See how your tips add up over weeks and payouts.",
+      "lastMonth": "Last month",
+      "last3Months": "Last 3 months",
+      "customDates": "Custom dates",
+      "totalTips": "Total tips",
+      "payoutStatus": "Payout status",
+      "paidOn": "Paid on {date}",
+      "pendingPayout": "Pending payout",
+      "details": "Details"
+    }
+  },
+  "venue": {
+    "login": {
+      "title": "Cashless tipping for modern Bali venues",
+      "subtitle": "Boost staff earnings, simplify tip accounting, and keep your team motivated.",
+      "feature1": "Direct to your Midtrans account",
+      "feature1Desc": "Tips go straight to your existing payment flow.",
+      "feature2": "Smart distribution rules",
+      "feature2Desc": "Set up personal or pooled tips in a few clicks.",
+      "feature3": "Transparent for staff",
+      "feature3Desc": "Your team sees what they earned and when payouts happen.",
+      "email": "Email",
+      "password": "Password",
+      "login": "Log in",
+      "register": "Register new venue"
+    },
+    "register": {
+      "title": "Register Your Venue",
+      "subtitle": "Start accepting digital tips in minutes",
+      "venueName": "Venue Name",
+      "venueNamePlaceholder": "Cafe Organic",
+      "venueType": "Venue Type",
+      "selectType": "Select type",
+      "restaurant": "Restaurant",
+      "cafe": "Cafe",
+      "bar": "Bar",
+      "coffeeShop": "Coffee Shop",
+      "other": "Other",
+      "email": "Email",
+      "password": "Password",
+      "createAccount": "Create Account",
+      "creating": "Creating account...",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign in"
+    },
+    "dashboard": {
+      "title": "{venue} dashboard",
+      "subtitle": "Monitor digital tips and payouts for your team.",
+      "thisWeek": "This week",
+      "thisMonth": "This month",
+      "totalTips": "Total tips",
+      "transactions": "Transactions",
+      "averageTip": "Average tip",
+      "activeStaff": "Active staff",
+      "pendingPayouts": "Pending payouts",
+      "pendingPayoutsDesc": "You have pending payouts for last week.",
+      "goToPayouts": "Go to payouts",
+      "topPerformers": "Top performers",
+      "tips": "tips",
+      "printQR": "Print QR codes",
+      "printQRDesc": "Download and print QR codes for staff and tables.",
+      "manageStaff": "Manage staff",
+      "manageStaffDesc": "Edit your team and roles.",
+      "distributionRules": "Distribution rules",
+      "distributionRulesDesc": "Adjust how tips are shared."
+    },
+    "payouts": {
+      "title": "Staff payouts",
+      "subtitle": "Review and mark payouts as completed.",
+      "totalToPay": "Total to pay out",
+      "platformFee": "Platform fee (5%)",
+      "pendingManual": "Pending manual payout",
+      "warning": "Tipsio does not transfer money to staff bank accounts.",
+      "warningDesc": "Please make cash or bank transfers to your staff first, then mark payouts as \"Paid\" here so their dashboards are updated.",
+      "staff": "Staff",
+      "amount": "Amount",
+      "status": "Status",
+      "markPaid": "Mark paid",
+      "markAllPaid": "Mark all as paid"
+    },
+    "staff": {
+      "title": "Staff management",
+      "subtitle": "Add and manage your team members.",
+      "addStaff": "Add staff",
+      "name": "Name",
+      "role": "Role",
+      "contact": "Contact",
+      "participatesInTips": "Participates in tips",
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "qr": {
+      "title": "QR codes",
+      "subtitle": "Create and download QR codes for staff and tables.",
+      "staffQRs": "Staff QRs",
+      "staffQRsDesc": "Personal codes for badges or table stands.",
+      "tableQRs": "Venue/Table QRs",
+      "tableQRsDesc": "Generic codes for pooled tips (tables/zones).",
+      "createTableQR": "Create table QR",
+      "tableName": "Table name/number",
+      "downloadSVG": "Download SVG",
+      "downloadPNG": "Download PNG"
+    }
+  },
+  "admin": {
+    "dashboard": {
+      "title": "Admin Dashboard",
+      "subtitle": "Platform overview and management",
+      "totalVenues": "Total venues",
+      "active": "Active",
+      "allTimeTxns": "All-time txns",
+      "totalVolume": "Total volume",
+      "today": "Today",
+      "failedToday": "Failed today",
+      "manageVenues": "Manage Venues",
+      "manageVenuesDesc": "View, edit, and block venues on the platform",
+      "transactionLogs": "Transaction Logs",
+      "transactionLogsDesc": "Monitor transactions and debug payment issues"
+    },
+    "venues": {
+      "title": "Venues",
+      "subtitle": "Manage all registered venues on the platform",
+      "searchPlaceholder": "Search by name or area...",
+      "allVenues": "All venues",
+      "live": "Live",
+      "testMode": "Test mode",
+      "blocked": "Blocked",
+      "venue": "Venue",
+      "midtrans": "Midtrans",
+      "totalVolume": "Total volume",
+      "staffCount": "Staff",
+      "lastActivity": "Last activity",
+      "actions": "Actions",
+      "viewDetails": "View details",
+      "block": "Block",
+      "unblock": "Unblock"
+    },
+    "transactions": {
+      "title": "Transaction Logs",
+      "subtitle": "Monitor all tip transactions across the platform",
+      "searchPlaceholder": "Search by order ID or venue...",
+      "allMidtrans": "All Midtrans",
+      "allTipsio": "All Tipsio",
+      "totalToday": "Total today",
+      "successful": "Successful",
+      "pending": "Pending",
+      "failed": "Failed",
+      "time": "Time",
+      "venue": "Venue",
+      "amount": "Amount",
+      "midtransStatus": "Midtrans",
+      "tipsioStatus": "Tipsio",
+      "action": "Action",
+      "viewDetails": "View details",
+      "transactionDetails": "Transaction Details",
+      "orderId": "Order ID",
+      "staff": "Staff",
+      "pool": "Pool",
+      "paymentMethod": "Payment Method",
+      "errorMessage": "Error Message"
+    }
+  }
+}

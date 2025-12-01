@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://tipsio:tipsio_password@db:5432/tipsio
+      - NEXTAUTH_URL=https://tipsio.sh1z01d.ru
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - MIDTRANS_SERVER_KEY=${MIDTRANS_SERVER_KEY}
+      - MIDTRANS_CLIENT_KEY=${MIDTRANS_CLIENT_KEY}
+      - MIDTRANS_IS_PRODUCTION=${MIDTRANS_IS_PRODUCTION:-false}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - tipsio-network
+
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=tipsio
+      - POSTGRES_PASSWORD=tipsio_password
+      - POSTGRES_DB=tipsio
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tipsio -d tipsio"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - tipsio-network
+
+volumes:
+  postgres_data:
+
+networks:
+  tipsio-network:
+    driver: bridge

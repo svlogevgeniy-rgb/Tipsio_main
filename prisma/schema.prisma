@@ -1,0 +1,260 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ==================== ENUMS ====================
+
+enum VenueStatus {
+  DRAFT
+  ACTIVE
+  BLOCKED
+}
+
+enum VenueType {
+  RESTAURANT
+  CAFE
+  BAR
+  COFFEE_SHOP
+  OTHER
+}
+
+enum StaffRole {
+  WAITER
+  BARTENDER
+  BARISTA
+  HOSTESS
+  OTHER
+}
+
+enum StaffStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum QrType {
+  PERSONAL
+  TABLE
+  VENUE
+}
+
+enum QrStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum TipType {
+  PERSONAL
+  POOL
+}
+
+enum TransactionStatus {
+  PENDING
+  PAID
+  FAILED
+  CANCELED
+  EXPIRED
+}
+
+enum PayoutStatus {
+  PENDING
+  PAID
+}
+
+enum DistributionMode {
+  PERSONAL
+  POOLED
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  STAFF
+}
+
+// ==================== MODELS ====================
+
+model User {
+  id            String    @id @default(cuid())
+  email         String?   @unique
+  phone         String?   @unique
+  passwordHash  String?
+  role          UserRole
+  emailVerified DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  managedVenues Venue[]   @relation("VenueManager")
+  staffProfile  Staff?
+
+  @@index([email])
+  @@index([phone])
+}
+
+model Venue {
+  id                String           @id @default(cuid())
+  name              String
+  type              VenueType
+  address           String?
+  phone             String?
+  email             String?
+  logoUrl           String?
+  timezone          String           @default("Asia/Makassar")
+  status            VenueStatus      @default(DRAFT)
+  distributionMode  DistributionMode @default(PERSONAL)
+  allowStaffChoice  Boolean          @default(false)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  midtransMerchantId  String?
+  midtransServerKey   String?
+  midtransClientKey   String?
+  midtransConnected   Boolean  @default(false)
+  midtransEnvironment String   @default("sandbox")
+
+  managerId String
+  manager   User     @relation("VenueManager", fields: [managerId], references: [id])
+  staff     Staff[]
+  qrCodes   QrCode[]
+  tips      Tip[]
+  payouts   Payout[]
+
+  @@index([managerId])
+  @@index([status])
+}
+
+model Staff {
+  id                 String      @id @default(cuid())
+  displayName        String
+  fullName           String?
+  role               StaffRole
+  status             StaffStatus @default(ACTIVE)
+  participatesInPool Boolean     @default(true)
+  avatarUrl          String?
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+
+  venueId     String
+  venue       Venue           @relation(fields: [venueId], references: [id])
+  userId      String?         @unique
+  user        User?           @relation(fields: [userId], references: [id])
+  qrCode      QrCode?         @relation("StaffQr")
+  tips        Tip[]
+  allocations TipAllocation[]
+
+  @@index([venueId])
+  @@index([status])
+}
+
+model QrCode {
+  id        String   @id @default(cuid())
+  type      QrType
+  label     String?
+  status    QrStatus @default(ACTIVE)
+  shortCode String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  venueId String
+  venue   Venue   @relation(fields: [venueId], references: [id])
+  staffId String? @unique
+  staff   Staff?  @relation("StaffQr", fields: [staffId], references: [id])
+  tips    Tip[]
+
+  @@index([venueId])
+  @@index([shortCode])
+}
+
+model Tip {
+  id                      String            @id @default(cuid())
+  amount                  Int
+  netAmount               Int
+  platformFee             Int
+  guestPaidFee            Boolean           @default(false)
+  type                    TipType
+  status                  TransactionStatus @default(PENDING)
+  midtransOrderId         String            @unique
+  midtransPaymentType     String?
+  midtransTransactionId   String?
+  midtransTransactionTime DateTime?
+  createdAt               DateTime          @default(now())
+  updatedAt               DateTime          @updatedAt
+
+  venueId     String
+  venue       Venue           @relation(fields: [venueId], references: [id])
+  qrCodeId    String
+  qrCode      QrCode          @relation(fields: [qrCodeId], references: [id])
+  staffId     String?
+  staff       Staff?          @relation(fields: [staffId], references: [id])
+  allocations TipAllocation[]
+
+  @@index([venueId])
+  @@index([status])
+  @@index([createdAt])
+  @@index([midtransOrderId])
+}
+
+model TipAllocation {
+  id        String   @id @default(cuid())
+  amount    Int
+  date      DateTime @db.Date
+  createdAt DateTime @default(now())
+
+  tipId    String
+  tip      Tip     @relation(fields: [tipId], references: [id])
+  staffId  String
+  staff    Staff   @relation(fields: [staffId], references: [id])
+  payoutId String?
+  payout   Payout? @relation(fields: [payoutId], references: [id])
+
+  @@index([staffId])
+  @@index([date])
+  @@index([payoutId])
+}
+
+model Payout {
+  id          String       @id @default(cuid())
+  periodStart DateTime     @db.Date
+  periodEnd   DateTime     @db.Date
+  totalAmount Int
+  status      PayoutStatus @default(PENDING)
+  paidAt      DateTime?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  venueId     String
+  venue       Venue           @relation(fields: [venueId], references: [id])
+  allocations TipAllocation[]
+
+  @@index([venueId])
+  @@index([periodStart, periodEnd])
+}
+
+model OtpCode {
+  id        String   @id @default(cuid())
+  code      String
+  phone     String?
+  email     String?
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([phone])
+  @@index([email])
+  @@index([expiresAt])
+}
+
+model WebhookLog {
+  id        String   @id @default(cuid())
+  provider  String
+  payload   Json
+  processed Boolean  @default(false)
+  error     String?
+  createdAt DateTime @default(now())
+
+  @@index([provider])
+  @@index([processed])
+}
