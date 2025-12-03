@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { Building2, Search, MoreVertical, Ban, CheckCircle, AlertCircle, ExternalLink } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -21,17 +21,17 @@ interface Venue {
   staffCount: number
 }
 
+interface ApiVenue extends Omit<Venue, 'lastActivity'> {
+  lastActivity: string | null
+}
+
 export default function AdminVenuesPage() {
   const [venues, setVenues] = useState<Venue[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('all')
 
-  useEffect(() => {
-    fetchVenues()
-  }, [])
-
-  const fetchVenues = async () => {
+  const fetchVenues = useCallback(async () => {
     try {
       setLoading(true)
       const res = await fetch('/api/admin/venues')
@@ -39,7 +39,7 @@ export default function AdminVenuesPage() {
       const data = await res.json()
       
       // Format the data for display
-      const formattedVenues = data.map((venue: any) => ({
+      const formattedVenues = data.map((venue: ApiVenue) => ({
         id: venue.id,
         name: venue.name,
         area: venue.area,
@@ -56,7 +56,11 @@ export default function AdminVenuesPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    fetchVenues()
+  }, [fetchVenues])
 
   const formatLastActivity = (date: Date) => {
     const now = new Date()

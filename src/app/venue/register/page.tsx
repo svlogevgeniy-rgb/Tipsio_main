@@ -49,21 +49,34 @@ export default function RegisterPage() {
     setError(null);
 
     try {
+      console.log("[Register] Submitting registration:", { 
+        email: data.email, 
+        venueName: data.venueName,
+        venueType: data.venueType 
+      });
+
       const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
+      console.log("[Register] Response status:", response.status);
+
       const result = await response.json();
+      console.log("[Register] Response data:", result);
 
       if (!response.ok) {
-        setError(result.message || "Registration failed");
+        const errorMessage = result.message || "Registration failed";
+        console.error("[Register] Registration failed:", errorMessage);
+        setError(errorMessage);
         return;
       }
 
+      console.log("[Register] Registration successful, redirecting...");
       router.push("/venue/login?registered=true");
-    } catch {
+    } catch (err: any) {
+      console.error("[Register] Error during registration:", err);
       setError("Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
@@ -115,7 +128,13 @@ export default function RegisterPage() {
 
             <div className="space-y-2">
               <Label htmlFor="venueType">{t('venueType')}</Label>
-              <Select onValueChange={(value) => setValue("venueType", value as RegisterForm["venueType"])}>
+              <Select 
+                onValueChange={(value) => {
+                  setValue("venueType", value as RegisterForm["venueType"], { 
+                    shouldValidate: true 
+                  });
+                }}
+              >
                 <SelectTrigger className="h-12">
                   <SelectValue placeholder={t('selectType')} />
                 </SelectTrigger>
