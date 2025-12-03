@@ -54,7 +54,16 @@ export default function LoginPage() {
         return;
       }
 
-      router.push("/venue/dashboard");
+      // Get user session to check role
+      const response = await fetch("/api/auth/session");
+      const session = await response.json();
+      
+      // Redirect based on role
+      if (session?.user?.role === "ADMIN") {
+        router.push("/admin");
+      } else {
+        router.push("/venue/dashboard");
+      }
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {

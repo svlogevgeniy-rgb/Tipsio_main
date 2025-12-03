@@ -33,11 +33,17 @@ export async function GET() {
           orderBy: { createdAt: 'desc' }
         })
         
+        // Determine Midtrans status
+        let midtransStatus: 'LIVE' | 'TEST' | 'NOT_CONNECTED' = 'NOT_CONNECTED'
+        if (venue.midtransConnected && venue.midtransMerchantId) {
+          midtransStatus = venue.midtransEnvironment === 'production' ? 'LIVE' : 'TEST'
+        }
+        
         return {
           id: venue.id,
           name: venue.name,
           area: venue.address || 'Unknown',
-          midtransStatus: venue.midtransMerchantId ? 'LIVE' : 'NOT_CONNECTED',
+          midtransStatus,
           status: venue.status,
           totalVolume: tips._sum.amount || 0,
           lastActivity: lastTip?.createdAt || null,

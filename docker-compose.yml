@@ -36,6 +36,19 @@ services:
     networks:
       - tipsio-network
 
+  db-ui:
+    image: adminer:4
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - ADMINER_DEFAULT_SERVER=db
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - tipsio-network
+
 volumes:
   postgres_data:
 

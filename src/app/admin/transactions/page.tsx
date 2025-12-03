@@ -36,67 +36,19 @@ export default function AdminTransactionsPage() {
   }, [])
 
   const fetchTransactions = async () => {
-    // Mock data for development
-    setTransactions([
-      {
-        id: '1',
-        orderId: 'TIP-1732950123456',
-        venue: 'Cafe Organic Canggu',
-        amount: 50000,
-        midtransStatus: 'capture',
-        tipsioStatus: 'RECORDED',
-        paymentMethod: 'GoPay',
-        staffName: 'Agung',
-        createdAt: '2024-11-30T10:45:00Z'
-      },
-      {
-        id: '2',
-        orderId: 'TIP-1732950234567',
-        venue: 'Potato Head Beach Club',
-        amount: 100000,
-        midtransStatus: 'capture',
-        tipsioStatus: 'RECORDED',
-        paymentMethod: 'Credit Card',
-        staffName: 'Wayan',
-        createdAt: '2024-11-30T10:42:00Z'
-      },
-      {
-        id: '3',
-        orderId: 'TIP-1732950345678',
-        venue: 'La Brisa',
-        amount: 75000,
-        midtransStatus: 'deny',
-        tipsioStatus: 'FAILED',
-        paymentMethod: 'Credit Card',
-        staffName: null,
-        createdAt: '2024-11-30T10:40:00Z',
-        errorMessage: 'Card declined by issuing bank'
-      },
-      {
-        id: '4',
-        orderId: 'TIP-1732950456789',
-        venue: 'Revolver Espresso',
-        amount: 25000,
-        midtransStatus: 'pending',
-        tipsioStatus: 'PENDING',
-        paymentMethod: 'Bank Transfer',
-        staffName: 'Ketut',
-        createdAt: '2024-11-30T10:38:00Z'
-      },
-      {
-        id: '5',
-        orderId: 'TIP-1732950567890',
-        venue: 'Cafe Organic Canggu',
-        amount: 30000,
-        midtransStatus: 'expire',
-        tipsioStatus: 'FAILED',
-        paymentMethod: 'QRIS',
-        staffName: 'Made',
-        createdAt: '2024-11-30T10:30:00Z',
-        errorMessage: 'Payment expired after 15 minutes'
-      }
-    ])
-    setLoading(false)
+    try {
+      setLoading(true)
+      const res = await fetch('/api/admin/transactions')
+      if (!res.ok) throw new Error('Failed to fetch transactions')
+      const data = await res.json()
+      setTransactions(data)
+    } catch (error) {
+      console.error('Error fetching transactions:', error)
+      // Show empty list on error
+      setTransactions([])
+    } finally {
+      setLoading(false)
+    }
   }
 
 

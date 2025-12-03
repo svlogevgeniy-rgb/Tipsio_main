@@ -65,16 +65,21 @@ export default function VenueDashboardPage() {
   async function fetchDashboard() {
     try {
       setLoading(true);
+      setError(null);
       const res = await fetch(`/api/venues/dashboard?period=${period}`);
       if (res.status === 401) {
         router.push("/venue/login");
         return;
       }
-      if (!res.ok) throw new Error("Failed to load dashboard");
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || "Failed to load dashboard");
+      }
       const result = await res.json();
       setData(result);
-    } catch {
-      setError("Failed to load dashboard");
+    } catch (err) {
+      console.error("Dashboard error:", err);
+      setError(err instanceof Error ? err.message : "Failed to load dashboard");
     } finally {
       setLoading(false);
     }

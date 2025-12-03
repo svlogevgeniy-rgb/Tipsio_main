@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "shadcn-docs": {
+      "command": "uvx",
+      "args": ["shadcn-docs-mcp"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}

@@ -6,8 +6,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { useTranslations } from "@/i18n/client";
-import { 
+import {
   ArrowRight,
   CheckCircle2,
   ChevronDown,
@@ -18,8 +19,24 @@ import {
   CreditCard,
   Smartphone,
   LayoutDashboard,
-  Receipt
+  Receipt,
 } from "lucide-react";
+
+function BrandLogo({ textClassName = "text-xl sm:text-2xl" }: { textClassName?: string }) {
+  return (
+    <span className="inline-flex items-center gap-2 text-white">
+      <Image
+        src="/logo.svg"
+        alt="Tipsio logo"
+        width={28}
+        height={28}
+        className="h-6 w-6 sm:h-7 sm:w-7"
+        priority
+      />
+      <span className={`${textClassName} font-heading font-bold leading-none`}>Tipsio</span>
+    </span>
+  );
+}
 
 // Hero Animation - показывает поток чаевых
 function TipFlowAnimation() {
@@ -155,8 +172,8 @@ export default function Home() {
       <header className="fixed top-0 left-0 right-0 z-50 bg-primary border-b border-white/10">
         <div className="container mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Link href="/" className="text-xl font-heading font-bold text-white">
-              Tipsio
+            <Link href="/" className="flex items-center gap-2 text-white">
+              <BrandLogo />
             </Link>
             <span className="hidden sm:inline-block px-2 py-0.5 text-[10px] bg-white/20 text-white rounded-full">
               {t('betaBadge')}
@@ -568,7 +585,7 @@ export default function Home() {
       <footer className="py-8 px-4 border-t border-white/10">
         <div className="container mx-auto max-w-6xl">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="text-2xl font-heading font-bold text-white">Tipsio</div>
+            <BrandLogo textClassName="text-xl md:text-2xl" />
             <div className="flex gap-6 text-sm text-white/70">
               <Link href="/staff/login" className="hover:text-white transition-colors">
                 {t('footer.staffLogin')}

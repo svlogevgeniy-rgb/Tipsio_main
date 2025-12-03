@@ -1,19 +1,40 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Building2, FileText, TrendingUp, Users, DollarSign, AlertTriangle } from 'lucide-react'
+import { Building2, FileText, TrendingUp, Users, DollarSign, AlertTriangle, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { AuroraBackground } from '@/components/layout/aurora-background'
 
+interface Stats {
+  totalVenues: number
+  activeVenues: number
+  totalTransactions: number
+  totalVolume: number
+  todayTransactions: number
+  failedToday: number
+}
+
 export default function AdminDashboardPage() {
-  // Mock stats
-  const stats = {
-    totalVenues: 47,
-    activeVenues: 42,
-    totalTransactions: 12847,
-    totalVolume: 2450000000,
-    todayTransactions: 156,
-    failedToday: 3
+  const [stats, setStats] = useState<Stats | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetchStats()
+  }, [])
+
+  const fetchStats = async () => {
+    try {
+      setLoading(true)
+      const res = await fetch('/api/admin/stats')
+      if (!res.ok) throw new Error('Failed to fetch stats')
+      const data = await res.json()
+      setStats(data)
+    } catch (error) {
+      console.error('Error fetching stats:', error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const formatCurrency = (amount: number) => {
@@ -24,6 +45,26 @@ export default function AdminDashboardPage() {
       return `${(amount / 1000000).toFixed(1)}M`
     }
     return new Intl.NumberFormat('id-ID').format(amount)
+  }
+
+  if (loading) {
+    return (
+      <AuroraBackground>
+        <div className="min-h-screen p-6 flex items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      </AuroraBackground>
+    )
+  }
+
+  if (!stats) {
+    return (
+      <AuroraBackground>
+        <div className="min-h-screen p-6 flex items-center justify-center">
+          <p className="text-muted-foreground">Failed to load dashboard</p>
+        </div>
+      </AuroraBackground>
+    )
   }
 
   return (

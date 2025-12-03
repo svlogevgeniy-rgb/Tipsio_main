@@ -40,8 +40,12 @@ export async function GET(request: NextRequest) {
     try {
       const { prisma } = await import("@/lib/prisma");
 
+      const userRole = (session.user as { role?: string }).role;
+      
+      // For ADMIN, get the first venue or allow venue selection
+      // For MANAGER, get their venue
       const venue = await prisma.venue.findFirst({
-        where: { managerId: session.user.id },
+        where: userRole === "ADMIN" ? {} : { managerId: session.user.id },
       });
 
       if (!venue) {

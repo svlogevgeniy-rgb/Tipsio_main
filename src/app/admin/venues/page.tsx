@@ -32,67 +32,70 @@ export default function AdminVenuesPage() {
   }, [])
 
   const fetchVenues = async () => {
-    // Mock data for development
-    setVenues([
-      {
-        id: '1',
-        name: 'Cafe Organic Canggu',
-        area: 'Canggu',
-        midtransStatus: 'LIVE',
-        status: 'ACTIVE',
-        totalVolume: 45000000,
-        lastActivity: '2 mins ago',
-        staffCount: 8
-      },
-      {
-        id: '2',
-        name: 'Potato Head Beach Club',
-        area: 'Seminyak',
-        midtransStatus: 'LIVE',
-        status: 'ACTIVE',
-        totalVolume: 128500000,
-        lastActivity: '5 mins ago',
-        staffCount: 24
-      },
-      {
-        id: '3',
-        name: 'Revolver Espresso',
-        area: 'Seminyak',
-        midtransStatus: 'TEST',
-        status: 'ACTIVE',
-        totalVolume: 0,
-        lastActivity: '1 hour ago',
-        staffCount: 4
-      },
-      {
-        id: '4',
-        name: 'La Brisa',
-        area: 'Canggu',
-        midtransStatus: 'LIVE',
-        status: 'BLOCKED',
-        totalVolume: 67200000,
-        lastActivity: '3 days ago',
-        staffCount: 15
-      },
-      {
-        id: '5',
-        name: 'Milk & Madu',
-        area: 'Ubud',
-        midtransStatus: 'NOT_CONNECTED',
-        status: 'ACTIVE',
-        totalVolume: 0,
-        lastActivity: 'Never',
-        staffCount: 0
-      }
-    ])
-    setLoading(false)
+    try {
+      setLoading(true)
+      const res = await fetch('/api/admin/venues')
+      if (!res.ok) throw new Error('Failed to fetch venues')
+      const data = await res.json()
+      
+      // Format the data for display
+      const formattedVenues = data.map((venue: any) => ({
+        id: venue.id,
+        name: venue.name,
+        area: venue.area,
+        midtransStatus: venue.midtransStatus,
+        status: venue.status,
+        totalVolume: venue.totalVolume,
+        lastActivity: venue.lastActivity ? formatLastActivity(new Date(venue.lastActivity)) : 'Never',
+        staffCount: venue.staffCount
+      }))
+      
+      setVenues(formattedVenues)
+    } catch (error) {
+      console.error('Error fetching venues:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const formatLastActivity = (date: Date) => {
+    const now = new Date()
+    const diffMs = now.getTime() - date.getTime()
+    const diffMins = Math.floor(diffMs / 60000)
+    const diffHours = Math.floor(diffMs / 3600000)
+    const diffDays = Math.floor(diffMs / 86400000)
+    
+    if (diffMins < 1) return 'Just now'
+    if (diffMins < 60) return `${diffMins} min${diffMins > 1 ? 's' : ''} ago`
+    if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`
+    if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`
+    return date.toLocaleDateString()
   }
 
 
   const handleBlock = async (venueId: string) => {
-    setVenues(venues.map(v => 
-      v.id === venueId ? { ...v, status: v.status === 'BLOCKED' ? 'ACTIVE' : 'BLOCKED' } : v
-    ))
+    const venue = venues.find(v => v.id === venueId)
+    if (!venue) return
+    
+    const newStatus = venue.status === 'BLOCKED' ? 'ACTIVE' : 'BLOCKED'
+    
+    try {
+      const res = await fetch('/api/admin/venues', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ venueId, status: newStatus })
+      })
+      
+      if (!res.ok) throw new Error('Failed to update venue')
+      
+      // Update local state
+      setVenues(venues.map(v => 
+        v.id === venueId ? { ...v, status: newStatus } : v
+      ))
+    } catch (error) {
+      console.error('Error updating venue:', error)
+      alert('Failed to update venue status')
+    }
   }
 
   const filteredVenues = venues.filter(venue => {

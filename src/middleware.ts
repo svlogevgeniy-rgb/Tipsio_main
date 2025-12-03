@@ -91,6 +91,11 @@ export async function middleware(request: NextRequest) {
     }
   }
   
+  // Redirect ADMIN from venue routes to admin panel
+  if (userRole === 'ADMIN' && pathname.startsWith('/venue/') && !pathname.startsWith('/venue/login')) {
+    return NextResponse.redirect(new URL('/admin', request.url))
+  }
+  
   return NextResponse.next()
 }
 
