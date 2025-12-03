@@ -13,6 +13,8 @@ const registerSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     console.log("[Registration] Starting registration process");
+    console.log("[Registration] Prisma client available:", !!prisma);
+    console.log("[Registration] DATABASE_URL set:", !!process.env.DATABASE_URL);
     
     const body = await request.json();
     console.log("[Registration] Request body received:", { 
@@ -87,14 +89,31 @@ export async function POST(request: NextRequest) {
     );
   } catch (error: any) {
     console.error("[Registration] Error:", error);
-    console.error("[Registration] Error stack:", error.stack);
+    console.error("[Registration] Error name:", error.name);
     console.error("[Registration] Error message:", error.message);
+    console.error("[Registration] Error stack:", error.stack);
+    console.error("[Registration] Error code:", error.code);
+    
+    // Check if it's a Prisma error
+    if (error.code) {
+      console.error("[Registration] Prisma error code:", error.code);
+      console.error("[Registration] Prisma meta:", error.meta);
+    }
+    
+    // Check if it's a database connection error
+    if (error.message?.includes("connect") || error.message?.includes("ECONNREFUSED")) {
+      console.error("[Registration] Database connection error detected");
+    }
     
     return NextResponse.json(
       { 
         code: "INTERNAL_ERROR", 
         message: "Internal server error",
-        details: process.env.NODE_ENV === "development" ? error.message : undefined
+        details: process.env.NODE_ENV === "development" ? {
+          message: error.message,
+          code: error.code,
+          name: error.name
+        } : undefined
       },
       { status: 500 }
     );
